@@ -1,14 +1,26 @@
 const express=require('express');
 const http=require("http");
-const {server}=require('socket.io');
+const socketio=require('socket.io');
 const {PORT}=require('./config/serverconfig')
 
-const startserver=()=>{
-    const app=express();
+ const app=express();
 
-    app.listen(PORT,()=>{
+const httpserver=http.createServer(app);
+
+const io=socketio(httpserver);
+
+
+const startserver=()=>{
+     io.on('connection',(socket)=>{
+        console.log('user connected',socket.id);
+     });
+
+     app.get('/get',(req,res)=>{
+        res.send("we are uisng websockets")
+     })
+    httpserver.listen(PORT,()=>{
         console.log(`server is starting at port no:${PORT}`);
-    })
+    });
 }
 
 startserver();
