@@ -16,10 +16,18 @@ const startserver=()=>{
      });
 
      app.get('/get',(req,res)=>{
-        res.send("we are uisng websockets")
+        res.send("we are uisng websockets");
      })
+     
     httpserver.listen(PORT,()=>{
-        console.log(`server is starting at port no:${PORT}`);
+      try {
+           
+         console.log(`server is starting at port no:${PORT}`);
+         
+      } catch (error) {
+          console.log('server is failed to load');
+      }
+        
     });
 }
 
